@@ -23,16 +23,17 @@ const routeConfig = [
   {
     route: "/:token",
     page: "/index"
-  },
-  {
-    route: "*",
-    page: "/index"
   }
 ];
 
-routeConfig.forEach(({ route, page }) =>
-  server.get(route, (req, res) => app.render(req, res, page, req.params))
-);
+routeConfig.forEach(({ route, page }) => {
+  server.get(route, (req, res) => app.render(req, res, page, req.params));
+});
+
+server.get("*", async (req, res) => {
+  await prepare;
+  handle(req, res);
+});
 
 if (isDev) {
   server.listen(3000, () => console.log(`listening on port 3000!`));
