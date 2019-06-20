@@ -1,31 +1,4 @@
-const { firestore } = require("./firestore");
-
-const guestCollection = firestore.collection("guests");
-
-const getGuestByToken = token =>
-  new Promise((resolve, reject) =>
-    guestCollection
-      .where("token", "==", token)
-      .get()
-      .then(snapshot => {
-        let guest = null;
-        snapshot.forEach(doc => (guest = doc.data()));
-        resolve(guest);
-      })
-      .catch(error => reject(error))
-  );
-
-const updateGuest = guest =>
-  new Promise((resolve, reject) =>
-    guestCollection
-      .where("token", "==", guest.token)
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(doc => guestCollection.doc(doc.id).update(guest));
-        resolve(guest);
-      })
-      .catch(error => reject(error))
-  );
+const { getGuestByToken, updateGuest } = require("./firestore");
 
 exports.getGuest = async (req, res) => {
   const { token } = req.params;

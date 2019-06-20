@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "initguests": "node ./scripts/initializeguests.js",
     "dev": " node index.js --dev",
     "prod": "next build && firebase serve --port 3000",
     "deploy": "next build && firebase deploy"
@@ -20,6 +21,8 @@
   },
   "homepage": "https://github.com/MichiTha/taming#readme",
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2",
     "@types/node": "^11.13.0",
     "@types/react": "^16.8.12",
     "@types/react-dom": "^16.8.3",
@@ -32,9 +35,13 @@
     "next": "^8.0.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "typescript": "^3.4.2"
+    "typescript": "^3.4.2",
+    "uuid": "^3.3.2"
   },
   "engines": {
     "node": "8"
+  },
+  "devDependencies": {
+    "pdfmake": "^0.1.57"
   }
 }
