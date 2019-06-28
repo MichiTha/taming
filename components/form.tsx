@@ -3,6 +3,8 @@ import * as React from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 type Props = {
@@ -38,8 +40,9 @@ class Form extends React.Component<Props, State> {
 
   private handleChangePeople = (
     event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    const value = parseInt(event.target.value);
+  ): void => this.setPeople(parseInt(event.target.value));
+
+  private setPeople = (value: number) => {
     value >= 0 &&
       value < 10 &&
       this.setState(
@@ -55,8 +58,9 @@ class Form extends React.Component<Props, State> {
 
   private handleChangeVegetarians = (
     event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    const value = parseInt(event.target.value);
+  ): void => this.setVegetarians(parseInt(event.target.value));
+
+  private setVegetarians = (value: number) => {
     value >= 0 &&
       value <= this.state.people &&
       this.setState({ vegetarians: value }, () =>
@@ -66,8 +70,9 @@ class Form extends React.Component<Props, State> {
 
   private handleChangeVegans = (
     event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    const value = parseInt(event.target.value);
+  ): void => this.setVegans(parseInt(event.target.value));
+
+  private setVegans = (value: number) => {
     value >= 0 &&
       value <= this.state.people &&
       this.setState({ vegans: value }, () =>
@@ -94,7 +99,16 @@ class Form extends React.Component<Props, State> {
               : "Wie viele Personen nimmt ihr mit?"}
           </Typography>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ display: "flex" }}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            disabled={this.state.people <= 1}
+            onClick={() => this.setPeople(this.state.people - 1)}
+          >
+            -
+          </Button>
           <TextField
             id="standard-number"
             value={people}
@@ -105,20 +119,42 @@ class Form extends React.Component<Props, State> {
               shrink: true,
               required: true
             }}
-            inputProps={{ style: { textAlign: "center" } }}
+            inputProps={{
+              style: { textAlign: "center" },
+              endAdornment: (
+                <InputAdornment position="end">Personen</InputAdornment>
+              )
+            }}
             margin="normal"
             style={{
               display: "flex",
               justifyContent: "center"
             }}
           />
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            disabled={this.state.people >= 9}
+            onClick={() => this.setPeople(this.state.people + 1)}
+          >
+            +
+          </Button>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="subtitle1" align="center" gutterBottom>
             Wie viele davon sind Vegetarier?
           </Typography>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ display: "flex" }}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            onClick={() => this.setVegetarians(this.state.vegetarians - 1)}
+          >
+            -
+          </Button>
           <TextField
             id="standard-number"
             value={vegetarians}
@@ -132,13 +168,32 @@ class Form extends React.Component<Props, State> {
             margin="normal"
             style={{ display: "flex", justifyContent: "center" }}
           />
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            disabled={
+              this.state.vegetarians + this.state.vegans >= this.state.people
+            }
+            onClick={() => this.setVegetarians(this.state.vegetarians + 1)}
+          >
+            +
+          </Button>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="subtitle1" align="center" gutterBottom>
             Wie viele davon sind Veganer?
           </Typography>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ display: "flex" }}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            onClick={() => this.setVegans(this.state.vegans - 1)}
+          >
+            -
+          </Button>
           <TextField
             id="standard-number"
             value={vegans}
@@ -152,6 +207,17 @@ class Form extends React.Component<Props, State> {
             margin="normal"
             style={{ display: "flex", justifyContent: "center" }}
           />
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            disabled={
+              this.state.vegetarians + this.state.vegans >= this.state.people
+            }
+            onClick={() => this.setVegans(this.state.vegans + 1)}
+          >
+            +
+          </Button>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="subtitle1" align="center" gutterBottom>

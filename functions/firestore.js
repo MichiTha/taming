@@ -9,27 +9,37 @@ const db = admin.firestore();
 
 const guestCollection = db.collection("guests");
 
+const getData = (doc, resolve, reject) => {
+  if (doc.exists) {
+    resolve(doc.data());
+  } else {
+    reject("No such document!");
+  }
+};
+
 exports.getGuestByToken = token =>
   new Promise((resolve, reject) =>
     guestCollection
-      .where("token", "==", token)
+      .doc(token)
       .get()
-      .then(snapshot => {
-        let guest = null;
-        snapshot.forEach(doc => (guest = doc.data()));
-        resolve(guest);
-      })
+      .then(doc => getData(doc, resolve, reject))
       .catch(error => reject(error))
   );
 
 exports.updateGuest = guest =>
   new Promise((resolve, reject) =>
     guestCollection
-      .where("token", "==", guest.token)
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(doc => guestCollection.doc(doc.id).update(guest));
-        resolve(guest);
-      })
+      .doc(guest.token)
+      .update(guest)
+      .then(doc => getData(doc, resolve, reject))
+      .catch(error => reject(error))
+  );
+
+exports.addGuest = guest =>
+  new Promise((resolve, reject) =>
+    guestCollection
+      .doc(guest.token)
+      .set(guest)
+      .then(doc => getData(doc, resolve, reject))
       .catch(error => reject(error))
   );

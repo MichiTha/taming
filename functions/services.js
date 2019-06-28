@@ -19,8 +19,9 @@ exports.updateGuest = async (req, res) => {
 
     const update = {
       ...originalGuest,
-      confirmed: updateRequest.confirmed || false,
-      people: updateRequest.people || 1,
+      confirmed: !!updateRequest.confirmed,
+      coming: updateRequest.coming || originalGuest.coming,
+      form: updateRequest.form || originalGuest.form,
       token: originalGuest.token
     };
 
