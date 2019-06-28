@@ -31,7 +31,7 @@ exports.updateGuest = guest =>
     guestCollection
       .doc(guest.token)
       .update(guest)
-      .then(doc => getData(doc, resolve, reject))
+      .then(() => resolve(guest))
       .catch(error => reject(error))
   );
 
