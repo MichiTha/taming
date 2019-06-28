@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import Container from "../components/container";
 import Form, { FormState } from "../components/form";
@@ -165,8 +166,13 @@ class Index extends React.Component<Props, State> {
       showSubmitDialog
     } = this.state;
     const { classes } = this.props;
+
     if (!guest && loading) {
-      return <div />;
+      return (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <CircularProgress className={classes.progress} />
+        </div>
+      );
     } else if (!guest && !loading) {
       return (
         <React.Fragment>
