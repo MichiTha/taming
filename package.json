@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "createbackup": "node ./scripts/createbackup.js",
+    "createreport": "node ./scripts/createreport.js",
     "initguests": "node ./scripts/initializeguests.js",
     "dev": " node index.js --dev",
     "prod": "next build && firebase serve --port 3000",

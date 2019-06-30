@@ -185,13 +185,34 @@ class Index extends React.Component<Props, State> {
         </React.Fragment>
       );
     } else if (guest && guest.confirmed) {
-      return (
-        <React.Fragment>
-          <Typography variant="title" align="center" gutterBottom>
-            {"Vielen Dank für deine Antwort!"}
-          </Typography>
-        </React.Fragment>
-      );
+      if (!guest.coming) {
+        return (
+          <React.Fragment>
+            <Typography variant="title" align="center" gutterBottom>
+              {`Schade das ${isSingel ? "du" : "ihr "} nicht kommen ${
+                isSingel ? "kannst" : "könnt"
+              } ...`}
+            </Typography>
+            <img
+              style={{ width: "100%" }}
+              src="https://firebasestorage.googleapis.com/v0/b/taming-7a92a.appspot.com/o/kitten.jfif?alt=media&token=426f779a-0bff-4abb-9c0a-f3e0febbacf0"
+            />
+            <Typography variant="title" align="center" gutterBottom>
+              {`... wir hätten ${
+                isSingel ? "dich" : "euch"
+              } gerne dabei gehabt.`}
+            </Typography>
+          </React.Fragment>
+        );
+      } else {
+        return (
+          <React.Fragment>
+            <Typography variant="title" align="center" gutterBottom>
+              {"Vielen Dank für deine Antwort!"}
+            </Typography>
+          </React.Fragment>
+        );
+      }
     } else {
       return (
         <React.Fragment>
